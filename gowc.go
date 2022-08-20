@@ -16,7 +16,7 @@ func main() {
 	var countingLines bool
 	targets := os.Args[1:]
 
-	if SliceContains(targets, "-l") {
+	if sliceContains(targets, "-l") {
 		countingLines = true
 		targets = os.Args[2:]
 	} else {
@@ -42,13 +42,13 @@ func main() {
 }
 
 func getWordCount(filename string) {
-	fileContent, err := os.ReadFile(filename)
+	fileContent, err := os.Open(filename)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// wordCount := len(strings.Fields(string(fileContent)))
-        wordCount := wordCounter(fileContent)
+	wordCount, err := wordCounter(fileContent)
 	fmt.Printf("File: %s\nWord Count: %d\n", filename, wordCount)
 }
 
@@ -59,13 +59,13 @@ func getWordCountReg(filename string) {
 	}
 
 	for _, match := range matches {
-		fileContent, err := os.ReadFile(match)
+		fileContent, err := os.Open(match)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		// wordCount := len(strings.Fields(string(fileContent)))
-                wordCount := wordCounter(fileContent)
+		wordCount, err := wordCounter(fileContent)
 		fmt.Printf("File: %s\nWord Count: %d\n", filename, wordCount)
 	}
 }
@@ -158,7 +158,7 @@ func wordCounter(r io.Reader) (int, error) {
 }
 
 // Have to write my own contains method for checking for flags
-func SliceContains(targetSlice []string, pattern string) bool {
+func sliceContains(targetSlice []string, pattern string) bool {
 	for _, slice := range targetSlice {
 		if slice == pattern {
 			return true
