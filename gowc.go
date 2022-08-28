@@ -114,10 +114,10 @@ func lineCounter(r io.Reader) (int, error) {
 
 	for {
 		// c is the number of bytes read into the buffer (number of bytes in the file)
-		c, err := r.Read(buf)
+		numberBytes, err := r.Read(buf)
 		// we the use bytes.Count to count the number of non-overlapping instances of our line seperator
 		// in the buffer (:c means every byte from 0 -> length of buffer)
-		count += bytes.Count(buf[:c], lineSep)
+		count += bytes.Count(buf[:numberBytes], lineSep)
 
 		// Check for our errors
 		switch {
@@ -140,10 +140,10 @@ func wordCounter(r io.Reader) (int, error) {
 
 	for {
 		// c is the number of bytes read into the buffer (number of bytes in the file)
-		c, err := r.Read(buf)
+		numberBytes, err := r.Read(buf)
 		// we the use bytes.Count to count the number of non-overlapping instances of our line seperator
 		// in the buffer (:c means every byte from 0 -> length of buffer)
-		count += bytes.Count(buf[:c], lineSep)
+		count += bytes.Count(buf[:numberBytes], lineSep)
 
 		// Check for our errors
 		switch {
